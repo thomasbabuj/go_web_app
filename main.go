@@ -6,24 +6,17 @@
 package main
 
 import "net/http"
-import "log"
+
+type person struct {
+	fName string
+}
+
+func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("First Name: " + p.fName))
+}
 
 func main() {
+	personOne := &person{fName: "Thomas"}
 
-	/*
-	 * Using own mux instead of default
-	 */
-	myMux := http.NewServeMux()
-	myMux.HandleFunc("/", someFunc)
-	myMux.HandleFunc("/test", testFunc)
-	http.ListenAndServe(":8080", myMux)
-	log.Fatal(http.ListenAndServe(":8080", myMux))
-}
-
-func someFunc(w http.ResponseWriter, req *http.Request) {
-	w.Write([]byte("Hello Golang World!! :)"))
-}
-
-func testFunc(w http.ResponseWriter, req *http.Request) {
-	w.Write([]byte("This is s sample test route...."))
+	http.ListenAndServe(":8080", personOne)
 }

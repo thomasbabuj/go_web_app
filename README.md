@@ -4,30 +4,17 @@ Go Web App ( Experiment )
 
 ## Video Comments :
     
-    Processing HTTP requests with Go is primarliy about two things :
+   ServerMux is also have a method called, ServeHTTP using this we can
+   create HTTP handlers.
 
-        1) ServeMux aka Request Router aka Multiplexor
+   Here instead of providing a response itself passes the request on to a
+   second handler.
 
-        2) Handelers
+   Difference between method and function in Golang,
 
-    ## ServeMux :
+        In Go, a function which takes a receiver is usually called a method (probably just because people are still used to the terminology of OOP).
 
-        ServeMux = HTTP Request router = Multiplexor = Mux
-
-        Compares incoming request against a list of predefined URL paths, and 
-        calls the assoicated handler for path whenever a match is found.
-
-    ## Handlers :
-
-        Responsible for writing response headers and bodies.
-
-        Almost any type ("object") can be a handlers, so long as it 
-        satisfies the http.Hander Interface.
-
-        In lay man terms, that simply means it must have a ServerHTTP method with
-        a following signature :
-
-            ServerHTTP(http.ResponseWriter, *http.Request)
+        http://stackoverflow.com/questions/8263546/whats-the-difference-of-functions-and-methods-in-google-go
 
 
 

@@ -1,36 +1,34 @@
 # go_web_app
 Go Web App ( Experiment )
 
-NICE TO KNOW
-www.rawgit.com
 
 ## Video Comments :
     
-    - http.ListenAndServe
-        
-        -- listens for, and responds to, http requests
-        
-        -- handles each request using go routines
-        
-            --- lightweight concurrency (eg, coroutines - processes --> threads --> coroutines)
-            --- this is multiplexing, thus, multiplexor ( = HTTP request router = ServeMux = mux )
-            --- blacks main thread (call after configuration of server complete)
+    Processing HTTP requests with Go is primarliy about two things :
 
-    - http.Handle
-        
-        -- handles a URL request        
-        -- maps a URL to any TYPE ("object") implementing the handler interface
-            
-            --- http://golang.org/pkg/net/http/#Handler
-    
-    - http.HandleFunc
-        
-        -- handles a URL request
-        -- maps a URL to a FUNCTION
+        1) ServeMux aka Request Router aka Multiplexor
 
-            --- "wrapper" around a function
-                ---- turns any function into a handler
+        2) Handelers
 
-    Handle -> handler
+    ## ServeMux :
 
-    HandleFunc -> handlerFunc
+        ServeMux = HTTP Request router = Multiplexor = Mux
+
+        Compares incoming request against a list of predefined URL paths, and 
+        calls the assoicated handler for path whenever a match is found.
+
+    ## Handlers :
+
+        Responsible for writing response headers and bodies.
+
+        Almost any type ("object") can be a handlers, so long as it 
+        satisfies the http.Hander Interface.
+
+        In lay man terms, that simply means it must have a ServerHTTP method with
+        a following signature :
+
+            ServerHTTP(http.ResponseWriter, *http.Request)
+
+
+
+

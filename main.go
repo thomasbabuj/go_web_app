@@ -1,5 +1,5 @@
 /**
-*  Basic Server
+*  Muxs
 *
  */
 
@@ -9,10 +9,15 @@ import "net/http"
 import "log"
 
 func main() {
-	http.HandleFunc("/", someFunc)
-	http.HandleFunc("/test", testFunc)
-	http.ListenAndServe(":8080", nil)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	/*
+	 * Using own mux instead of default
+	 */
+	myMux := http.NewServeMux()
+	myMux.HandleFunc("/", someFunc)
+	myMux.HandleFunc("/test", testFunc)
+	http.ListenAndServe(":8080", myMux)
+	log.Fatal(http.ListenAndServe(":8080", myMux))
 }
 
 func someFunc(w http.ResponseWriter, req *http.Request) {
@@ -22,34 +27,3 @@ func someFunc(w http.ResponseWriter, req *http.Request) {
 func testFunc(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte("This is s sample test route...."))
 }
-
-/*
-http.HandleFunc("/", someFunction)
-
-    Go matches requests to the most specific route registered
-
-    http://golang.org/pkg/net/http/#ServeMux
-
-    everything matches "/"
-
-    nil
-
-     - http.ListenAndServe(":8080", nil)
-     - meaning: use the DefaultServeMux
-
-      http://golang.org/pkg/net/http/#pkg-variables
-
-    behind the scenes:
-
-      - request comes in
-      - received on primary thread
-      - goroutine created
-
-        -- runs concurrently to main thread
-
-            -- lightweight
-
-    - request passed to goroutine
-
-    - handling multiple requests at same time: "multiplexing"
-*/

@@ -1,22 +1,35 @@
 /**
-*  Muxs
+*  Serving a File
 *
+*   Looking for a existing file and returns its contents
  */
 
 package main
 
-import "net/http"
+import (
+	"io/ioutil"
+	"log"
+	"net/http"
+)
 
-type person struct {
-	fName string
+type MyHandler struct {
 }
 
-func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("First Name: " + p.fName))
+func (this *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path[1:]
+	log.Println(path)
+
+	data, err := ioutil.ReadFile(string(path))
+
+	if err == nil {
+		w.Write(data)
+	} else {
+		w.WriteHeader(404)
+		w.Write([]byte("404 My Friend - " + http.StatusText(404)))
+	}
 }
 
 func main() {
-	personOne := &person{fName: "Thomas"}
-
-	http.ListenAndServe(":8080", personOne)
+	http.Handle("/", new(MyHandler))
+	http.ListenAndServe(":8080", nil)
 }

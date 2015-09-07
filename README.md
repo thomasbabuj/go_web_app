@@ -4,18 +4,38 @@ Go Web App ( Experiment )
 
 ## Video Comments :
     
-   ServerMux is also have a method called, ServeHTTP using this we can
-   create HTTP handlers.
+   Checkout this article - 
+    
+    https://medium.com/@benbjohnson/structuring-applications-in-go-3b04be4ff091
 
-   Here instead of providing a response itself passes the request on to a
-   second handler.
+    this can also be useful in debugging:
+    
+        -- import "os"
+        
+        ---- log.Println("ENV: ", os.Environ())
 
-   Difference between method and function in Golang,
+    ROOT is determined by ...
+    
+    WHERE YOU ARE IN YOUR DIRECTORY WHEN YOU RUN "GO RUN"
+    
+    wherever you are in your dir when you run "go run" - that's your root
+    
+    for example
+        if this is your file structure
+            go_web_app
+            -- bin
+            -- pkg
+            -- src
+            ---- main
+            ------ main.go
+            -- templates
+            ---- home.html
 
-        In Go, a function which takes a receiver is usually called a method (probably just because people are still used to the terminology of OOP).
-
-        http://stackoverflow.com/questions/8263546/whats-the-difference-of-functions-and-methods-in-google-go
-
-
-
-
+        if you were in "go_web_app / src / main"
+        and you ran "go run main.go"
+        then the root of your files would be "go_web_app / src / main"
+        and you would not be able to access "templates" nor "templates/home.html"
+        if you were in "go_web_app"
+        and you ran "go run main.go"
+        then the root of your files would be "go_web_app"
+        and you would be able to access "templates" and "templates/home.html"        
